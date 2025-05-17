@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - Find Recipes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html" class="active">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <div class="container">
+                <h2>Find Your Perfect Recipe</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for recipes...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="categoryFilter">Category:</label>
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="areaFilter">Cuisine:</label>
+                        <select id="areaFilter">
+                            <option value="">All Cuisines</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="ingredientFilter">Main Ingredient:</label>
+                        <select id="ingredientFilter">
+                            <option value="">All Ingredients</option>
+                            <!-- Will be populated by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="results-section">
+            <div class="container">
+                <h3>Search Results</h3>
+                <div id="recipeResults" class="recipe-grid">
+                    <!-- Recipes will be displayed here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Use parchment paper for easy cleanup when baking.</p>
+                <p>Bring dairy ingredients to room temperature before baking for better incorporation.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

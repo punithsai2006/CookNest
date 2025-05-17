@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - My Favorites</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html" class="active">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="favorites-section">
+            <div class="container">
+                <h2>My Favorite Recipes</h2>
+                <div id="favoritesContainer" class="recipe-grid">
+                    <!-- Favorite recipes will be displayed here -->
+                    <p id="noFavoritesMessage">You haven't added any recipes to your favorites yet.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Store fresh herbs in a glass of water in the fridge to keep them fresh longer.</p>
+                <p>Use a microplane to grate garlic and ginger for more flavor in your dishes.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
