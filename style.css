@@ -1011,4 +1011,10 @@ footer {
         font-size: 0.85rem;
     }
 }
-
+@media (max-width: 320px) {
+    .video-container {
+        padding-bottom: 56.25%;
+        width: 290px;
+        height: 150px;
+    }
+}
