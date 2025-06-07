@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CookNest - Find Recipes</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    .search-section {
+      padding: 4rem 5%;
+      background: linear-gradient(135deg, rgba(46, 139, 87, 0.85) 0%, rgba(0, 100, 0, 0.85) 100%),
+        url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      color: white;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-section h2 {
+      color: white;
+      margin-bottom: 1.5rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      font-size: 2.5rem;
+    }
+
+    .filters label {
+      color: white;
+      font-weight: bold;
+    }
+
+    .recipe-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .recipe-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 280px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .recipe-card:hover {
+      transform: scale(1.03);
+    }
+
+    .recipe-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .recipe-card-content {
+      padding: 1rem;
+    }
+
+    .view-recipe {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: var(--primary-green, #2e8b57);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    footer {
+      background: #222;
+      color: white;
+      padding: 2rem 5%;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footer-section {
+      flex: 1;
+      padding: 1rem;
+      min-width: 250px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 1rem;
+      border-top: 1px solid #555;
+      padding-top: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">CookNest</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="recipes.html" class="active">Recipes</a></li>
+        <li><a href="indian-recipies.html">Indian Recipes</a></li>
+        <li><a href="favorites.html">Favorites</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-section">
+      <div class="container">
+        <h2>Find Your Perfect Recipe</h2>
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Search for recipes..." />
+          <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="filters">
+          <div class="filter-group">
+            <label for="categoryFilter">Category:</label>
+            <select id="categoryFilter">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="areaFilter">Cuisine:</label>
+            <select id="areaFilter">
+              <option value="">All Cuisines</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="ingredientFilter">Main Ingredient:</label>
+            <select id="ingredientFilter">
+              <option value="">All Ingredients</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-section">
+      <div class="container">
+        <h3>Search Results</h3>
+        <div id="recipeResults" class="recipe-grid">
+          <!-- Recipe cards will be added here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>CookNest</h3>
+        <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="recipes.html">Recipes</a></li>
+          <li><a href="favorites.html">Favorites</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Cooking Tips</h3>
+        <p>Use parchment paper for easy cleanup when baking.</p>
+        <p>Bring dairy ingredients to room temperature before baking for better incorporation.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> CookNest. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function initRecipeSearch() {
+      const searchBtn = document.getElementById("searchBtn");
+      const searchInput = document.getElementById("searchInput");
+      const categoryFilter = document.getElementById("categoryFilter");
+      const areaFilter = document.getElementById("areaFilter");
+      const ingredientFilter = document.getElementById("ingredientFilter");
+      const recipeResults = document.getElementById("recipeResults");
+
+      // Populate filters
+      fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
+        .then(res => res.json())
+        .then(data => {
+          data.meals.forEach(category => {
+            const option = document.createElement("option");
+            option.value = category.strCategory;
+            option.textContent = category.strCategory;
+            categoryFilter.appendChild(option);
+          });
+        });
+
+      fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
+        .then(res => res.json())
+        .then(data => {
+          data.meals.forEach(area => {
+            const option = document.createElement("option");
+            option.value = area.strArea;
+            option.textContent = area.strArea;
+            areaFilter.appendChild(option);
+          });
+        });
+
+      fetch("https://www.themealdb.com/api/json/v1/1/list.php?i=list")
+        .then(res => res.json())
+        .then(data => {
+          data.meals.forEach(ingredient => {
+            const option = document.createElement("option");
+            option.value = ingredient.strIngredient;
+            option.textContent = ingredient.strIngredient;
+            ingredientFilter.appendChild(option);
+          });
+        });
+
+      function searchRecipes() {
+        const term = searchInput.value.trim();
+        const category = categoryFilter.value;
+        const area = areaFilter.value;
+        const ingredient = ingredientFilter.value;
+
+        let apiUrl = "https://www.themealdb.com/api/json/v1/1/";
+        if (term) apiUrl += `search.php?s=${term}`;
+        else if (category) apiUrl += `filter.php?c=${category}`;
+        else if (area) apiUrl += `filter.php?a=${area}`;
+        else if (ingredient) apiUrl += `filter.php?i=${ingredient}`;
+        else apiUrl += "search.php?s=";
+
+        fetch(apiUrl)
+          .then(res => res.json())
+          .then(data => {
+            recipeResults.innerHTML = "";
+            if (!data.meals) {
+              recipeResults.innerHTML = "<p>No recipes found. Try a different search.</p>";
+              return;
+            }
+
+            data.meals.forEach(meal => {
+              const card = document.createElement("div");
+              card.className = "recipe-card";
+              card.innerHTML = `
+                <img src="${meal.strMealThumb}" alt="${meal.strMeal}">
+                <div class="recipe-card-content">
+                  <h4>${meal.strMeal}</h4>
+                  <p>${meal.strArea || ""} ${meal.strCategory ? "• " + meal.strCategory : ""}</p>
+                  <a href="recipe-detail.html?id=${meal.idMeal}" class="view-recipe">View Recipe</a>
+                </div>
+              `;
+              recipeResults.appendChild(card);
+            });
+          });
+      }
+
+      searchBtn.addEventListener("click", searchRecipes);
+      searchInput.addEventListener("keypress", e => {
+        if (e.key === "Enter") searchRecipes();
+      });
+      [categoryFilter, areaFilter, ingredientFilter].forEach(f =>
+        f.addEventListener("change", searchRecipes)
+      );
+    }
+
+    // Auto-init depending on page
+    const path = window.location.pathname;
+    if (path.includes("recipes.html")) {
+      initRecipeSearch();
+    }
+  </script>
+  <script src="script.js"></script>
+</body>
+
+</html>

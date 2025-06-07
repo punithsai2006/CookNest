@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - My Favorites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Compact Rectangular View Recipe Button */
+.view-btn {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  margin-top: 10px;
+  padding: 12px 20px;      /* increased padding for bigger button */
+  font-size: 14px;         /* bigger font */
+  font-weight: bold;       /* bold text */
+  border-radius: 8px;      /* more rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  width: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
+}
+
+.view-btn i {
+  font-size: 0.9rem; /* slightly bigger icon */
+}
+
+.view-btn:hover {
+  background-color: var(--dark-green);
+  box-shadow: 0 2px 4px rgba(0, 100, 0, 0.2);
+  transform: none;
+}
+
+/* Adjust for small screens */
+@media (max-width: 480px) {
+  .view-btn span {
+    display: none;
+  }
+  .view-btn {
+    padding: 12px; /* keep padding big even on small */
+    border-radius: 8px;
+  }
+  .view-btn i {
+    font-size: 1rem;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipies.html">Indian Recipes</a></li>
+                <li><a href="favorites.html" class="active">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="favorites-section">
+            <div class="container">
+                <h1>My Favorite Recipes</h1>
+                <div id="favoritesContainer" class="recipe-grid">
+                    <!-- Favorite recipes will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Store fresh herbs in a glass of water in the fridge to keep them fresh longer.</p>
+                <p>Use a microplane to grate garlic and ginger for more flavor in your dishes.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        
+document.addEventListener("DOMContentLoaded", () => {
+    // Set current year in footer
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const container = document.getElementById("favoritesContainer");
+    const noFavoritesMsg = document.createElement('p');
+    noFavoritesMsg.id = 'noFavoritesMessage';
+    noFavoritesMsg.className = 'empty-msg';
+    noFavoritesMsg.textContent = 'You haven\'t added any recipes to your favorites yet.';
+
+    if (favorites.length === 0) {
+        container.appendChild(noFavoritesMsg);
+        return;
+    }
+
+    container.innerHTML = ''; // Clear container before adding cards
+
+    favorites.forEach(fav => {
+        const card = document.createElement("article");
+        card.classList.add("recipe-card", "fav-card");
+        card.innerHTML = `
+            <img src="${fav.image}" alt="${fav.name}" loading="lazy">
+            <div class="card-content">
+                <h3>${fav.name}</h3>
+                <div class="recipe-meta">
+                    <span><i class="fas fa-globe"></i> ${fav.area || fav.state || 'Not specified'}</span>
+                    <span><i class="fas fa-tag"></i> ${fav.category || 'Not specified'}</span>
+                </div>
+                <div class="card-actions">
+                    <button class="view-btn btn-primary" data-page="${fav.page || ''}" data-id="${fav.id}">
+                        <i class="fas fa-book-open"></i> <span>View Recipe</span>
+                    </button>
+                    <button class="remove-fav-btn btn-danger" data-id="${fav.id}">
+                        <i class="fas fa-trash-alt"></i> Remove
+                    </button>
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    container.addEventListener("click", (event) => {
+        const viewBtn = event.target.closest('.view-btn');
+        const removeBtn = event.target.closest('.remove-fav-btn');
+
+        if (viewBtn) {
+            // If fav.page exists, use it to navigate, else fallback to recipe-detail.html?id=...
+            const page = viewBtn.getAttribute("data-page");
+            const id = viewBtn.getAttribute("data-id");
+
+            if (page && page.trim() !== '') {
+                window.location.href = page;
+            } else if (id) {
+                window.location.href = `recipe-detail.html?id=${id}`;
+            }
+        }
+
+        if (removeBtn) {
+            const recipeId = removeBtn.getAttribute("data-id");
+            const updatedFavorites = favorites.filter(fav => fav.id !== recipeId);
+            localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+            location.reload();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

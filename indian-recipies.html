@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CookNest - Indian Recipes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html" class="active">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section">
+            <div class="container">
+                <h2>Find Your Perfect Recipe</h2>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for state...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </section>
+        
+        <section class="results-section">
+            <div class="container">
+                <h3>Indian State Recipes</h3>
+                <div id="indianRecipesContainer" class="recipe-grid">
+                    <!-- Recipe cards will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Toast spices before grinding to enhance their flavor in Indian dishes.</p>
+                <p>Use fresh curry leaves for authentic South Indian flavors.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Indian state recipes data
+        const recipes = [
+            { state: "Andhra Pradesh", category: "Vegetarian", dish: "Tamarind Rice", image: "andhra.jpg", page: "andhra.html" },
+            { state: "Arunachal Pradesh", category: "Non-Vegetarian", dish: "Thukpa", image: "arunachal.jpg", page: "arunachal.html" },
+            { state: "Assam", category: "Non-Vegetarian", dish: "Masor Tenga", image: "assam.jpg", page: "assam.html" },
+            { state: "Bihar", category: "Vegetarian", dish: "Litti Chokha", image: "bihar.jpg", page: "bihar.html" },
+            { state: "Chhattisgarh", category: "Vegetarian", dish: "Chana Samosa", image: "chhattisgarh.jpg", page: "chhattisgarh.html" },
+            { state: "Goa", category: "Non-Vegetarian", dish: "Fish Curry", image: "goa.jpg", page: "goa.html" },
+            { state: "Gujarat", category: "Vegetarian", dish: "Dhokla", image: "gujarat.jpg", page: "gujarat.html" },
+            { state: "Haryana", category: "Vegetarian", dish: "Bajre ki Khichdi", image: "haryana.jpg", page: "haryana.html" },
+            { state: "Himachal Pradesh", category: "Vegetarian", dish: "Chana Madra", image: "himachal.jpg", page: "himachal.html" },
+            { state: "Jharkhand", category: "Vegetarian", dish: "Thekua", image: "jharkhand.jpg", page: "jharkhand.html" },
+            { state: "Karnataka", category: "Vegetarian", dish: "Bisi Bele Bath", image: "karnataka.jpg", page: "karnataka.html" },
+            { state: "Kerala", category: "Vegetarian", dish: "Avial", image: "kerala.jpg", page: "kerala.html" },
+            { state: "Madhya Pradesh", category: "Vegetarian", dish: "Bhutte ka Kees", image: "madhya.jpg", page: "madhya.html" },
+            { state: "Maharashtra", category: "Vegetarian", dish: "Pav Bhaji", image: "maharashtra.jpg", page: "maharashtra.html" },
+            { state: "Manipur", category: "Non-Vegetarian", dish: "Eromba", image: "manipur.jpg", page: "manipur.html" },
+            { state: "Meghalaya", category: "Non-Vegetarian", dish: "Jadoh", image: "meghalaya.jpg", page: "meghalaya.html" },
+            { state: "Mizoram", category: "Non-Vegetarian", dish: "Bai", image: "mizoram.jpg", page: "mizoram.html" },
+            { state: "Nagaland", category: "Non-Vegetarian", dish: "Smoked Pork", image: "nagaland.jpg", page: "nagaland.html" },
+            { state: "Odisha", category: "Vegetarian", dish: "Dalma", image: "odisha.jpg", page: "odisha.html" },
+            { state: "Punjab", category: "Vegetarian", dish: "Sarson da Saag", image: "punjab.jpg", page: "punjab.html" },
+            { state: "Rajasthan", category: "Vegetarian", dish: "Dal Baati Churma", image: "rajasthan.jpg", page: "rajasthan.html" },
+            { state: "Sikkim", category: "Non-Vegetarian", dish: "Phagshapa", image: "sikkim.jpeg", page: "sikkim.html" },
+            { state: "Tamil Nadu", category: "Vegetarian", dish: "Sambar", image: "tamilnadu.jpg", page: "tamilnadu.html" },
+            { state: "Telangana", category: "Non-Vegetarian", dish: "Hyderabadi Biryani", image: "telangana.jpg", page: "telangana.html" },
+            { state: "Tripura", category: "Non-Vegetarian", dish: "Mui Borok", image: "tripura.avif", page: "tripura.html" },
+            { state: "Uttar Pradesh", category: "Vegetarian", dish: "Tundey Kebab", image: "uttarpradesh.jpg", page: "uttarpradesh.html" },
+            { state: "Uttarakhand", category: "Vegetarian", dish: "Kafuli", image: "uttarakhand.jpg", page: "uttarakhand.html" },
+            { state: "West Bengal", category: "Non-Vegetarian", dish: "Fish Curry", image: "westbengal.jpg", page: "westbengal.html" }
+        ];
+
+        // Function to filter recipes based on search input and category
+        function filterRecipes(searchTerm, category) {
+            return recipes.filter(recipe => {
+                const matchesSearch = searchTerm === '' || 
+                    recipe.state.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    recipe.dish.toLowerCase().includes(searchTerm.toLowerCase());
+                
+                const matchesCategory = category === '' || recipe.category === category;
+                
+                return matchesSearch && matchesCategory;
+            });
+        }
+
+        // Function to display recipe cards
+        function displayRecipes(recipesToShow = recipes) {
+            const container = document.getElementById('indianRecipesContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+            
+            if (recipesToShow.length === 0) {
+                container.innerHTML = '<p class="no-results">No recipes found. Try a different search.</p>';
+                return;
+            }
+
+            recipesToShow.forEach(recipe => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.dish} from ${recipe.state}" onerror="this.onerror=null; this.src='placeholder.jpg';">
+                    <div class="recipe-card-content">
+                        <h3>${recipe.state}</h3>
+                        <h4>${recipe.dish}</h4>
+                        <p class="category">${recipe.category}</p>
+                        <a href="${recipe.page}" class="view-recipe">View Recipe</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display all recipes initially
+            displayRecipes();
+
+            // Set up search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+
+            // Function to perform search
+            function performSearch() {
+                const searchTerm = searchInput.value.trim();
+                const filteredRecipes = filterRecipes(searchTerm, '');
+                displayRecipes(filteredRecipes);
+            }
+
+            // Search button click event
+            if (searchBtn) {
+                searchBtn.addEventListener('click', performSearch);
+            }
+
+            // Search input enter key event
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

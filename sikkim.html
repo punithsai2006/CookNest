@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CookNest - Phagshapa (Sikkim)</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+</head>
+
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="indian-recipies.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to States
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Phagshapa</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="sikkim.jpeg" alt="Phagshapa" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p>
+                                <i class="fas fa-utensils"></i>
+                                <span id="recipeCategory">Non-Vegetarian</span>
+                            </p>
+                            <p>
+                                <i class="fas fa-globe"></i>
+                                <span id="recipeArea">Sikkim</span>
+                            </p>
+                            <p>
+                                <i class="fas fa-clock"></i>
+                                <span id="recipeTime">60 mins</span>
+                            </p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>500g pork belly, cut into strips</li>
+                                <li>250g radish, sliced</li>
+                                <li>2 dried red chilies</li>
+                                <li>3-4 cloves garlic, minced</li>
+                                <li>1 inch ginger, julienned</li>
+                                <li>2 onions, sliced</li>
+                                <li>Salt to taste</li>
+                                <li>Black pepper powder</li>
+                                <li>2 cups water</li>
+                                <li>Fresh cilantro for garnish</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. Clean and cut pork belly into thin strips.<br />
+                        2. In a pot, add pork and water. Bring to boil.<br />
+                        3. Add sliced radish, dried chilies, garlic, and ginger.<br />
+                        4. Simmer on medium heat for 30-35 minutes.<br />
+                        5. Add sliced onions and cook for another 10 minutes.<br />
+                        6. Season with salt and black pepper.<br />
+                        7. Cook until pork is tender and radish is soft.<br />
+                        8. Garnish with fresh cilantro and serve hot with rice.
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/XjYil0z29Fc"
+                        title="Phagshapa Recipe"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Use fatty pork belly for the most authentic flavor.</p>
+                <p>Don't overcook the radish—it should be tender but not mushy.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const recipeId = "sikkim-phagshapa";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Phagshapa",
+                        image: "sikkim.jpeg",
+                        area: "Sikkim",
+                        category: "Non-Vegetarian",
+                        page: "sikkim.html" // added page property
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+
+</html>

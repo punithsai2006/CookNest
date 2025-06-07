@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - Bengali Fish Curry (West Bengal)</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="indian-recipies.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to States
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Bengali Fish Curry</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="westbengal.jpg" alt="Bengali Fish Curry" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-utensils"></i> <span id="recipeCategory">Non-Vegetarian</span></p>
+                            <p><i class="fas fa-globe"></i> <span id="recipeArea">West Bengal</span></p>
+                            <p><i class="fas fa-clock"></i> <span id="recipeTime">45 mins</span></p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>500g Rohu fish, cut into pieces</li>
+                                <li>2 potatoes, cubed</li>
+                                <li>2 tomatoes, chopped</li>
+                                <li>2 onions, finely chopped</li>
+                                <li>2 tbsp ginger-garlic paste</li>
+                                <li>2 green chilies</li>
+                                <li>1 tsp turmeric powder</li>
+                                <li>1 tsp red chili powder</li>
+                                <li>1 tsp cumin powder</li>
+                                <li>1 tsp coriander powder</li>
+                                <li>2 tbsp mustard oil</li>
+                                <li>Salt to taste</li>
+                                <li>Coriander leaves for garnish</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. Marinate fish pieces with turmeric and salt for 15 minutes.<br>
+                        2. Heat mustard oil and lightly fry the fish pieces, set aside.<br>
+                        3. In the same oil, fry potatoes until golden.<br>
+                        4. Add onions and cook until translucent.<br>
+                        5. Add ginger-garlic paste and all spices, cook until oil separates.<br>
+                        6. Add tomatoes and cook until soft.<br>
+                        7. Add water, potatoes, and bring to a boil.<br>
+                        8. Add fried fish pieces and simmer until gravy thickens.<br>
+                        9. Garnish with coriander leaves and serve hot with rice.
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Iv73ADD_lok"
+                        title="Bengali Fish Curry Recipe" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Always use mustard oil for authentic Bengali flavor.</p>
+                <p>Don't overcook the fish - it should remain tender and flaky.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const recipeId = "westbengal-fish-curry";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Bengali Fish Curry",
+                        image: "westbengal.jpg",
+                        area: "West Bengal",
+                        category: "Non-Vegetarian",
+                        page: "westbengal.html",
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+</html> 

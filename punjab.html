@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - Sarson da Saag (Punjab)</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+               <a href="indian-recipies.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to States
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Sarson da Saag</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img
+                            id="recipeImage"
+                            src="punjab.jpg"
+                            alt="Sarson da Saag"
+                        />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p>
+                                <i class="fas fa-utensils"></i>
+                                <span id="recipeCategory">Vegetarian</span>
+                            </p>
+                            <p>
+                                <i class="fas fa-globe"></i>
+                                <span id="recipeArea">Punjab</span>
+                            </p>
+                            <p>
+                                <i class="fas fa-clock"></i>
+                                <span id="recipeTime">60 mins</span>
+                            </p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>1 kg mustard greens (sarson)</li>
+                                <li>250g spinach (palak)</li>
+                                <li>100g bathua leaves</li>
+                                <li>2 onions, chopped</li>
+                                <li>2 tomatoes, chopped</li>
+                                <li>2 tbsp ginger-garlic paste</li>
+                                <li>4 green chilies</li>
+                                <li>2 tbsp maize flour</li>
+                                <li>Salt to taste</li>
+                                <li>Ghee for serving</li>
+                                <li>Makki ki roti to serve</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. Clean and chop all the greens finely.<br />
+                        2. Pressure cook greens with chilies for 15-20 minutes.<br />
+                        3. Blend the cooked greens to a coarse paste.<br />
+                        4. In a pan, sauté onions until golden.<br />
+                        5. Add ginger-garlic paste and tomatoes.<br />
+                        6. Add the greens paste and maize flour.<br />
+                        7. Simmer for 20-25 minutes.<br />
+                        8. Serve hot with makki ki roti and ghee.
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/fU5G92KqnLo"
+                        title="Sarson da Saag Recipe"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                    ></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Use fresh mustard greens for the best flavor.</p>
+                <p>Don't skip the maize flour—it gives authentic texture.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const recipeId = "punjab-sarson-da-saag";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML =
+                        '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML =
+                        '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Sarson da Saag",
+                        image: "punjab.jpg",
+                        area: "Punjab",
+                        category: "Vegetarian",
+                        page: "punjab.html"
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+</html> 

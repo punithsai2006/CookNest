@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - Kafuli (Uttarakhand)</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="indian-recipies.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to States
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Kafuli</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="uttarakhand.jpg" alt="Kafuli" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-utensils"></i> <span id="recipeCategory">Vegetarian</span></p>
+                            <p><i class="fas fa-globe"></i> <span id="recipeArea">Uttarakhand</span></p>
+                            <p><i class="fas fa-clock"></i> <span id="recipeTime">45 mins</span></p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>2 bunches spinach, chopped</li>
+                                <li>1 bunch fenugreek leaves, chopped</li>
+                                <li>2 green chilies, finely chopped</li>
+                                <li>1 inch ginger, grated</li>
+                                <li>4-5 garlic cloves, minced</li>
+                                <li>1 onion, finely chopped</li>
+                                <li>2 tbsp rice flour</li>
+                                <li>1 tsp cumin seeds</li>
+                                <li>1/2 tsp turmeric powder</li>
+                                <li>Salt to taste</li>
+                                <li>2 tbsp ghee</li>
+                                <li>Water as needed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. Wash and chop spinach and fenugreek leaves finely.<br>
+                        2. Heat ghee in a pan, add cumin seeds and let them crackle.<br>
+                        3. Add chopped onions, ginger, garlic, and green chilies. Sauté until golden.<br>
+                        4. Add chopped greens and cook until wilted.<br>
+                        5. Add turmeric powder and salt. Cook for 5 minutes.<br>
+                        6. Make a paste of rice flour with water and add to the greens.<br>
+                        7. Simmer for 10-15 minutes until thick.<br>
+                        8. Serve hot with mandua ki roti (finger millet flatbread).
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/wMkGs1-9zB0"
+                        title="Kafuli Recipe" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Use fresh greens for the best flavor and nutrition.</p>
+                <p>The rice flour slurry is key to getting the right consistency.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const recipeId = "uttarakhand-kafuli";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Kafuli",
+                        image: "uttarakhand.jpg",
+                        area: "Uttarakhand",
+                        category: "Vegetarian",
+                        page: "uttarakhand.html",
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+</html> 

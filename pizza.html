@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CookNest - Chicken Pizza</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="avout.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Chicken Pizza</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="pizza.jpg" alt="Chicken Pizza" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-utensils"></i> <span id="recipeCategory">Fast Food</span></p>
+                            <p><i class="fas fa-globe"></i> <span id="recipeArea">Italy/Global</span></p>
+                            <p><i class="fas fa-clock"></i> <span id="recipeTime">1 hour</span></p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>1 pizza base (homemade or store-bought)</li>
+                                <li>1/2 cup pizza sauce</li>
+                                <li>1 cup cooked chicken (shredded/grilled)</li>
+                                <li>1 cup mozzarella cheese (grated)</li>
+                                <li>1/4 cup onions (sliced)</li>
+                                <li>1/4 cup capsicum (sliced)</li>
+                                <li>1 tsp chili flakes</li>
+                                <li>1 tsp oregano</li>
+                                <li>Salt and pepper to taste</li>
+                                <li>1 tbsp olive oil</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. Preheat oven to 220°C (428°F).<br>
+                        2. Spread pizza sauce over the base evenly.<br>
+                        3. Add shredded chicken, onions, capsicum, and cheese.<br>
+                        4. Sprinkle oregano, chili flakes, salt, and pepper.<br>
+                        5. Drizzle olive oil over the top.<br>
+                        6. Bake in preheated oven for 12–15 minutes or until cheese is melted and crust is golden.<br>
+                        7. Slice and serve hot with ketchup or garlic dip.
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/EBLtEsdTmPY"
+                        title="Chicken Pizza Recipe" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Always preheat the oven before baking pizza for even cooking.</p>
+                <p>Use a pizza stone or hot baking tray for a crispy crust.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const recipeId = "chicken-pizza";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Chicken Pizza",
+                        image: "pizza.jpg",
+                        area: "Italy/Global",
+                        category: "Fast Food",
+                        page: "pizza.html",
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+</html>

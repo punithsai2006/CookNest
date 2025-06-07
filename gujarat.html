@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CookNest - Dhokla (Gujarat)</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+</head>
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="indian-recipies.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to States
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Dhokla</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="gujarat.jpg" alt="Dhokla" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-utensils"></i> <span id="recipeCategory">Veg Snack</span></p>
+                            <p><i class="fas fa-globe"></i> <span id="recipeArea">Gujarat</span></p>
+                            <p><i class="fas fa-clock"></i> <span id="recipeTime">30 mins</span></p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <li>1 cup gram flour (besan)</li>
+                                <li>1 tbsp semolina (rava)</li>
+                                <li>1 tsp ginger-green chili paste</li>
+                                <li>1 tbsp lemon juice</li>
+                                <li>1 tsp sugar</li>
+                                <li>1 tsp ENO fruit salt</li>
+                                <li>Salt to taste</li>
+                                <li>3/4 cup water</li>
+                                <li>1 tbsp oil</li>
+                                <li>1 tsp mustard seeds</li>
+                                <li>5–6 curry leaves</li>
+                                <li>2 green chilies (slit)</li>
+                                <li>2 tbsp chopped coriander leaves</li>
+                                <li>2 tbsp grated coconut (optional)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions">
+                        1. In a bowl, mix besan, semolina, salt, sugar, ginger-chili paste, lemon juice, and water.<br>
+                        2. Stir to a smooth batter and let rest for 10 mins.<br>
+                        3. Add ENO and mix gently. Immediately pour into a greased steaming plate.<br>
+                        4. Steam for 15–20 mins or until a toothpick comes out clean.<br>
+                        5. Heat oil, crackle mustard seeds, add curry leaves and green chilies. Pour over dhokla.<br>
+                        6. Garnish with coriander and coconut. Cut into squares and serve.
+                    </p>
+                </div>
+
+                <div class="video-container" id="videoContainer">
+                    <h3>Watch Recipe Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/w_2eb9uaXns"
+                        title="Dhokla Recipe" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Don't overmix the batter after adding ENO – it helps keep dhokla fluffy!</p>
+                <p>Use fresh besan for better texture and taste.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const recipeId = "gujarat-dhokla";
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+            let isFavorite = favorites.some((fav) => fav.id === recipeId);
+
+            function updateFavoriteButton() {
+                if (isFavorite) {
+                    favoriteBtn.innerHTML = '<i class="fas fa-heart"></i> Remove from Favorites';
+                    favoriteBtn.classList.add("favorited");
+                } else {
+                    favoriteBtn.innerHTML = '<i class="far fa-heart"></i> Add to Favorites';
+                    favoriteBtn.classList.remove("favorited");
+                }
+            }
+
+            updateFavoriteButton();
+
+            favoriteBtn.addEventListener("click", () => {
+                const index = favorites.findIndex((fav) => fav.id === recipeId);
+                if (index === -1) {
+                    favorites.push({
+                        id: recipeId,
+                        name: "Dhokla",
+                        image: "gujarat.jpg",
+                        area: "Gujarat",
+                        category: "Veg Snack",
+                        page: "gujarat.html",
+                    });
+                    isFavorite = true;
+                } else {
+                    favorites.splice(index, 1);
+                    isFavorite = false;
+                }
+
+                localStorage.setItem("favorites", JSON.stringify(favorites));
+                updateFavoriteButton();
+            });
+        });
+    </script>
+</body>
+</html>

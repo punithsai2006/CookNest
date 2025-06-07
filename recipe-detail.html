@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CookNest - Recipe Details</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body onload="initRecipeDetail()">
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recipes.html">Recipes</a></li>
+                <li><a href="indian-recipes.html">Indian Recipes</a></li>
+                <li><a href="favorites.html">Favorites</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="recipe-detail">
+            <div class="container">
+                <a href="recipes.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Search
+                </a>
+                <div class="recipe-header">
+                    <h2 id="recipeTitle">Recipe Name</h2>
+                    <button id="favoriteBtn" class="favorite-btn">
+                        <i class="far fa-heart"></i> Add to Favorites
+                    </button>
+                </div>
+
+                <div class="recipe-content">
+                    <div class="recipe-image">
+                        <img id="recipeImage" src="" alt="Recipe image" />
+                    </div>
+
+                    <div class="recipe-info">
+                        <div class="recipe-meta">
+                            <p><i class="fas fa-utensils"></i> <span id="recipeCategory"></span></p>
+                            <p><i class="fas fa-globe"></i> <span id="recipeArea"></span></p>
+                            <p><i class="fas fa-clock"></i> <span id="recipeTime">30 mins</span></p>
+                        </div>
+
+                        <div class="ingredients">
+                            <h3>Ingredients</h3>
+                            <ul id="ingredientsList">
+                                <!-- Ingredients will be inserted here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <h3>Instructions</h3>
+                    <p id="recipeInstructions"></p>
+                </div>
+
+                <div class="video-container" id="videoContainer"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for perfect recipes.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="recipes.html">Recipes</a></li>
+                    <li><a href="favorites.html">Favorites</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Tips</h3>
+                <p>Let dough rest before rolling to prevent shrinking.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function initRecipeDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get("id");
+            const favoriteBtn = document.getElementById("favoriteBtn");
+
+            if (recipeId) {
+                fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const meal = data.meals[0];
+
+                        document.getElementById("recipeTitle").textContent = meal.strMeal;
+                        document.getElementById("recipeImage").src = meal.strMealThumb;
+                        document.getElementById("recipeCategory").textContent = meal.strCategory;
+                        document.getElementById("recipeArea").textContent = meal.strArea;
+                        document.getElementById("recipeInstructions").textContent = meal.strInstructions;
+
+                        const ingredientsList = document.getElementById("ingredientsList");
+                        ingredientsList.innerHTML = "";
+
+                        for (let i = 1; i <= 20; i++) {
+                            const ingredient = meal[`strIngredient${i}`];
+                            const measure = meal[`strMeasure${i}`];
+                            if (ingredient && ingredient.trim() !== "") {
+                                const li = document.createElement("li");
+                                li.innerHTML = `<i class="fas fa-check-circle"></i> ${measure} ${ingredient}`;
+                                ingredientsList.appendChild(li);
+                            }
+                        }
+
+                        const videoContainer = document.getElementById("videoContainer");
+                        if (meal.strYoutube) {
+                            const videoId = meal.strYoutube.split("v=")[1];
+                            videoContainer.innerHTML = `
+            <h3>Video Tutorial</h3>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}"
+              frameborder="0" allowfullscreen></iframe>
+          `;
+                        }
+
+                        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+                        let isFavorite = favorites.some((fav) => fav.id === meal.idMeal);
+
+                        function updateButton() {
+                            favoriteBtn.innerHTML = isFavorite
+                                ? '<i class="fas fa-heart"></i> Remove from Favorites'
+                                : '<i class="far fa-heart"></i> Add to Favorites';
+                            favoriteBtn.classList.toggle("favorited", isFavorite);
+                        }
+
+                        updateButton();
+
+                        favoriteBtn.addEventListener("click", () => {
+                            favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+                            const index = favorites.findIndex((fav) => fav.id === meal.idMeal);
+
+                            if (index === -1) {
+                                favorites.push({
+                                    id: meal.idMeal,
+                                    name: meal.strMeal,
+                                    image: meal.strMealThumb,
+                                    area: meal.strArea,
+                                    category: meal.strCategory
+                                });
+                                isFavorite = true;
+                            } else {
+                                favorites.splice(index, 1);
+                                isFavorite = false;
+                            }
+
+                            localStorage.setItem("favorites", JSON.stringify(favorites));
+                            updateButton();
+                        });
+                    });
+            }
+        }
+    </script>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

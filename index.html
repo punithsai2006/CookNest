@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookNest - Find Your Perfect Recipe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+
+<body>
+    <header>
+        <div class="logo">CookNest</div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Discover Delicious Recipes</h1>
+                <p>CookNest helps you discover delicious recipes from around the world. Easily search by name,
+                    category, cuisine, or ingredients. Enjoy step-by-step instructions, cooking videos, and save
+                    your favorites. Explore Indian dishes by state and find the perfect meal for any occasion.
+                    Simple, fast, and made for food lovers.
+                </p>
+                <button id="recipeBtn" class="cta-button"><a href="recipes.html">Try My Recipe Now</a></button>
+            </div>
+            <div class="hero-image">
+                <img src="food.jpg" alt="Person cooking delicious food">
+            </div>
+        </section>
+
+        <section class="image-section">
+            <div class="image-box">
+                <img src="search.jpg" alt="Smart ingredient search">
+                <div class="overlay">
+                    <h3>Smart ingredient search</h3>
+                    <p>Smart Ingredient Search lets you find recipes using ingredients you already have.
+                        Just enter what's in your kitchen, and CookNest shows matching dishes.
+                        It saves time, reduces food waste, and avoids extra shopping.
+                        Perfect for busy days or when you're low on groceries.</p>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="ind.jpg" alt="Indian recipie">
+                <div class="overlay">
+                    <h3>Indian recipie</h3>
+                    <p>Indian Recipes bring the rich flavors and traditions of India to your kitchen.
+                        From spicy curries to sweet desserts, explore authentic dishes from every region.
+                        Easy instructions make classic cooking simple for all skill levels.
+                        Discover the magic of Indian spices in every bite.</p>
+                </div>
+            </div>
+            <div class="image-box">
+                <img src="step.jpg" alt="step by step guided cooking">
+                <div class="overlay">
+                    <h3>Step by step guided cooking</h3>
+                    <p>Step-by-Step Guided Cooking makes every recipe easy to follow, even for beginners.
+                        Each step is clearly explained with instructions, images, and timers.
+                        You'll cook with confidence without missing a detail.
+                        It's like having a personal chef guiding you in your kitchen.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-utensils"></i>
+                <h3>Thousands of Recipes</h3>
+                <p>From appetizers to desserts, we have recipes for every taste and occasion.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-heart"></i>
+                <h3>Healthy Options</h3>
+                <p>Find recipes tailored to your dietary needs and health goals.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clock"></i>
+                <h3>Quick Meals</h3>
+                <p>Short on time? Discover meals you can make in 30 minutes or less.</p>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="container">
+                <h3>Trending of the Day</h3>
+                <div id="indianRecipesContainer" class="recipe-grid">
+                    <!-- Recipe cards will be added here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>CookNest</h3>
+                <p>Your one-stop destination for finding perfect recipes for every occasion.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Cooking Tips</h3>
+                <p>Did you know? Letting meat rest after cooking allows juices to redistribute for more tender results.
+                </p>
+                <p>Always taste your food before serving to adjust seasoning as needed.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 CookNest. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const recipes = [
+            { state: "Japan", category: "Non-Vegetarian", dish: "Sushi", image: "sushi.webp", page: "sushi.html" },
+            { state: "United States", category: "Non-Vegetarian", dish: "Chicken Pizza", image: "pizza.jpg", page: "pizza.html" },
+            { state: "Italy", category: "Vegetarian", dish: "Mushroom Risotto", image: "mushroom.jpg", page: "mushroom.html" },
+            { state: "Mexico", category: "Non-Vegetarian", dish: "Tacos", image: "tacos.jpeg", page: "tacos.html" },
+        ];
+
+        function displayRecipes() {
+            const container = document.getElementById('indianRecipesContainer');
+            container.innerHTML = '';
+
+            recipes.forEach(recipe => {
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.innerHTML = `
+                    <img src="${recipe.image}" alt="${recipe.dish}" onerror="this.src='placeholder.jpg'">
+                    <div class="recipe-card-content">
+                        <h3>${recipe.state}</h3>
+                        <h4>${recipe.dish}</h4>
+                        <p class="category">${recipe.category}</p>
+                        <a href="${recipe.page}" class="view-recipe">View Recipe</a>
+                    </div>`;
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', displayRecipes);
+    </script>
+</body>
+
+</html>
