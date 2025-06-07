@@ -1,0 +1,23 @@
+.ingredients ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ingredients li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.ingredients li::before {
+    content: "\f058";
+    /* fa-circle-check */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: #2e8b57;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    font-size: 18px;
+}
