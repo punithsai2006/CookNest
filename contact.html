@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
     <header>
         <div class="logo">CookNest</div>
@@ -57,7 +59,8 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Your Message</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Type your message here..."></textarea>
+                        <textarea id="message" name="message" rows="5" required
+                            placeholder="Type your message here..."></textarea>
                     </div>
                     <div class="form-group">
                         <label>How did you hear about us?</label>
@@ -96,43 +99,51 @@
                 <h3>Frequently Asked Questions</h3>
                 <div class="faq">
                     <div class="faq-item">
-                        <button class="faq-question">How do I submit my own recipe? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">How do I submit my own recipe? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>You can submit your recipes via this form or email us at recipes@cooknest.com.</p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">Is CookNest free to use? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">Is CookNest free to use? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>Yes! CookNest is completely free to use.</p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">Can I save my favorite recipes? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">Can I save my favorite recipes? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>Yes, once you create an account, you can save and organize recipes.</p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">Do you offer gluten-free recipes? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">Do you offer gluten-free recipes? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
-                            <p>Absolutely! Use our filter tools to find gluten-free, vegan, and other dietary options.</p>
+                            <p>Absolutely! Use our filter tools to find gluten-free, vegan, and other dietary options.
+                            </p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">How often are new recipes added? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">How often are new recipes added? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>New recipes are added weekly, and user submissions are reviewed daily.</p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">Can I request a specific recipe? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">Can I request a specific recipe? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>Yes! Use the contact form to request any specific recipes you'd like to see.</p>
                         </div>
                     </div>
                     <div class="faq-item">
-                        <button class="faq-question">What formats do you accept for recipe submissions? <i class="fas fa-chevron-down"></i></button>
+                        <button class="faq-question">What formats do you accept for recipe submissions? <i
+                                class="fas fa-chevron-down"></i></button>
                         <div class="faq-answer">
                             <p>We accept plain text, Word docs, and image formats (JPG, PNG) for recipe photos.</p>
                         </div>
@@ -167,6 +178,22 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                answer.classList.toggle('open');
+                button.classList.toggle('active');
+            });
+        });
+        // Form submission alert
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert("Thank you for contacting CookNest! We’ll get back to you soon.");
+            this.reset();
+        });
+    </script>
 </body>
+
 </html>
