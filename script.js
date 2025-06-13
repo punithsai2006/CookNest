@@ -1,4 +1,3 @@
-// Main JavaScript for CookNest
 // FAQ toggle functionality
 document.querySelectorAll('.faq-question').forEach(button => {
     button.addEventListener('click', () => {
@@ -17,22 +16,6 @@ document.getElementById('contactForm').addEventListener('submit', function (e) {
 
 // Year update
 document.getElementById('year').textContent = new Date().getFullYear();
-
-// FAQ toggle
-document.querySelectorAll('.faq-question').forEach(button => {
-    button.addEventListener('click', () => {
-        const answer = button.nextElementSibling;
-        answer.classList.toggle('open');
-        button.classList.toggle('active');
-    });
-});
-
-// Optional: Simple form prevent default for demo purpose
-document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    alert("Thank you for your message! We’ll get back to you soon.");
-    this.reset();
-});
 
 // Recipe Search Functionality
 function initRecipeSearch() {
@@ -162,10 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
             favorites.push({
                 id: recipeId,
                 name: "Chana Madra",
-                image: "himachal.jpg",           // <-- fix extension here
+                image: "himachal.jpg",           
                 area: "Himachal Pradesh",
                 category: "Curry",
-                page: "himachal-pradesh.html"   // <-- add this for link back from favorites
+                page: "himachal-pradesh.html"  
             });
             isFavorite = true;
         } else {
